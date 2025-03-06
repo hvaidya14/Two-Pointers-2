@@ -108,3 +108,38 @@ class Solution {
         
     }
 }
+
+
+
+
+class Solution  {
+    public List<int[]> optimal(List<int[]> a , List<int[]> b, int target) {
+        Collections.sort(a, (i,j) -> Integer.compare(i[1], j[1]));
+        Collections.sort(b, (i,j) -> Integer.compare(i[1], j[1]));
+        List<int[]> result = new ArrayList<>();
+        int low = 0;
+        int high = b.size()-1;
+        int prevsum =0;
+        while (low < a.size() && high >= 0) {
+            int[] temp1 = new int[2];
+            int[] temp2 = new int[2];
+            temp1 = a.get(low);
+            temp2 = b.get(high);
+            int sum = temp1[1] + temp2[1];
+            if ( sum <= target) {
+                if (sum > prevsum) {
+                    prevsum = sum;
+                     result.remove(result.size()-1);
+                }
+                if (sum == prevsum )
+                {
+                    result.add(new int[]{temp1[0], temp2[0]});
+                }
+                low++;
+            } else if (sum > target) {
+                high--;
+            }
+        }
+        return result;
+    }
+}
